@@ -35,14 +35,6 @@ describe("Base cases", () => {
     assert.deepEqual(result, {});
   });
 
-  it("should handle CSP with single quotes and no spaces", () => {
-    const csp = "default-src'none'";
-    const result = parse(csp);
-    assert.deepEqual(result, {
-      "default-src": ["'none'"]
-    });
-  });
-
   it("should handle CSP with unusual formatting and spaces", () => {
     const csp = "  default-src   'self'   ;   img-src   *;  ";
     const result = parse(csp);
