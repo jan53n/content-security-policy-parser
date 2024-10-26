@@ -1,37 +1,44 @@
-Start = (Policies / Empty { return {}; });
+Policy = Directive (AsciiWhiteSpace ";" (Directive AsciiWhiteSpace)?)*;
 
-Policies = l:(Space? p:Policy PolicySep Space? { return p; } / p:Policy { return p; })+ {
-	return l.reduce((p, c) => ({ ...p, ...c }), {});
-};
+Directive = DirectiveName (RequiredAsciiWhiteSpace DirectiveValue)?;
 
-Policy = PolicyWithRules / SingleSrcPolicy;
+DirectiveName = (ALPHA / DIGIT / "-")+;
 
-SingleSrcPolicy = name:Src {
-	return { [name]: [] };
-};
+// DirectiveValue = (RequiredAsciiWhiteSpace !([!-+] / [--;] / [<-~]))*
 
-PolicyWithRules = name:Src Space rules:Rules {
-	return { [name]: rules };
-};
+DirectiveValue = SourceList;
 
-Src = $(SrcWord '-' / SrcWord)+;
+SourceList = SourceExpression (RequiredAsciiWhiteSpace SourceExpression)* / "'none'";
 
-SrcWord = $([a-zA-Z])+;
+SourceExpression = SchemeSource / HostSource / KeywordSource / NonceSource / HashSource;
 
-Rules = rules:(r:Rule RuleSep { return r; } / r:Rule)+ {
-	return rules;
-};
+SchemeSource = SchemePart ":";
 
-Rule = rule:(QuotedRule / UnQuotedRule) {
-	return rule;
-};
+HostSource = (SchemePart "://")? HostPart;
 
-QuotedRule = rule:$(RuleQuote $(!RuleQuote .)* RuleQuote) { return rule; };
+KeywordSource = "'self'" / "'unsafe-inline'" / "'unsafe-eval'"
+                 / "'strict-dynamic'" / "'unsafe-hashes'"
+                 / "'report-sample'" / "'unsafe-allow-redirects'"
+                 / "'wasm-unsafe-eval'";
 
-UnQuotedRule = $(!RuleQuote !Space [a-zA-Z0-9 \.\:\/\-*])+
+NonceSource = "nonce-" Base64Value;
 
-Space = ' '+;
-RuleSep = Space;
-RuleQuote = "'";
-PolicySep = ';'
-Empty = ""
+HashSource = HashAlgorithm "-" Base64Value;
+
+HashAlgorithm = "sha256" / "sha384" / "sha512";
+
+Base64Value = (ALPHA / DIGIT / "+" / "/" / "-" / "_" )+ ("=")|2..|
+
+HostPart = ("*.")? HostChar+ ("." HostChar+)* (".")? / "*";
+
+HostChar = ALPHA / DIGIT / "-";
+
+SchemePart = ALPHA (ALPHA / DIGIT / "+" / "-" / ".")*;
+
+AsciiWhiteSpace = ('\t' / '\n' / '\f' / '\r' / ' ')*;
+
+RequiredAsciiWhiteSpace = ('\t' / '\n' / '\f' / '\r' / ' ')+;
+
+ALPHA = [A-Za-z];
+
+DIGIT = [0-9];
