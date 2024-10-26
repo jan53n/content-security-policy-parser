@@ -1,0 +1,18 @@
+{
+  "name": "duration",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "node test --watch index.js",
+    "build": "node ./bin/build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "peggy": "^4.1.1"
+  }
+}
