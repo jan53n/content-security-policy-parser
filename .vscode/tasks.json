@@ -1,21 +1,20 @@
 {
-	"version": "2.0.0",
 	"tasks": [
 		{
 			"type": "npm",
 			"script": "test",
 			"group": "test",
-			"problemMatcher": [],
 			"label": "npm: test",
 			"detail": "run all the tests and watch for changes"
 		},
 		{
 			"type": "npm",
-			"script": "performance:log",
-			"group": "none",
+			"script": "build",
+			"group": "build",
+			"isBackground": true,
 			"problemMatcher": [],
-			"label": "npm: performance:log",
-			"detail": "tail collected perf logs"
-		}
+			"label": "npm: build",
+			"detail": "build"
+		},
 	]
 }

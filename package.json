@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "pretest": "npm run build",
-    "test": "node test --watch index.js",
+    "test": "node --test --watch generated/parser.js test/*",
     "build": "node ./bin/build.js"
   },
   "keywords": [],
@@ -14,5 +14,8 @@
   "description": "",
   "dependencies": {
     "peggy": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1"
   }
 }
