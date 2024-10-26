@@ -1,35 +1,35 @@
-Duration = "P" years:Y? months:M? weeks:W? days:D? time:T? {
-	if (!years && !months && !weeks && !days && !time) {
-    	throw new Error("Invalid format");
-    }
-    
-	return {
-    years,
-    months,
-    weeks,
-    days,
-    hours: null,
-    minutes: null,
-    seconds: null,
-    ...time
-    };
-}
+Policies = l:(p:Policy PolicySep Space? { return p; } / p:Policy { return p; })+ {
+	return l.reduce((p, c) => ({ ...p, ...c }), {});
+};
 
-T = "T" hours:H? minutes:M? seconds:S? {
-	if (!hours && !minutes && !seconds) {
-    	throw new Error("Invalid format");
-    }
-    
-	return { hours, minutes, seconds };
-}
+Policy = PolicyWithRules / SingleSrcPolicy;
 
-Y = y:Q "Y" { return y; }
-M = m:Q "M" { return m; }
-W = w:Q "W" { return w; }
-D = d:Q "D" { return d; }
-H = h:Q "H" { return h; }
-S = s:Q "S" { return s; }
+SingleSrcPolicy = name:Src {
+	return { [name]: [] };
+};
 
-Q = n:$([0-9]+ ("." [0-9]+)? / "") {
-	return parseFloat(n) || 1;
-}
+PolicyWithRules = name:Src Space rules:Rules {
+	return { [name]: rules };
+};
+
+Src = $(SrcWord '-' / SrcWord)+;
+
+SrcWord = $([a-zA-Z])+;
+
+Rules = rules:(r:Rule RuleSep { return r; } / r:Rule)+ {
+	return rules;
+};
+
+Rule = rule:(QuotedRule / UnQuotedRule) {
+	return rule;
+};
+
+QuotedRule = RuleQuote rule:$(!RuleQuote .)* RuleQuote { return rule; };
+
+UnQuotedRule = $(!RuleQuote !Space [a-zA-Z0-9 \.\:\/\-*])+
+
+Space = ' '+;
+RuleSep = Space;
+RuleQuote = "'";
+PolicySep = ';'
+Empty = ""
