@@ -1,29 +1,33 @@
-Policy = Directive (AsciiWhiteSpace ";" (Directive AsciiWhiteSpace)?)*;
+Policy = OptionalWhiteSpace d:Directive|.., PolicyDelim| PolicyDelim? {
+    return d.reduce((p, c) => ({ ...p, ...c }), {});
+} / "";
 
-Directive = DirectiveName (RequiredAsciiWhiteSpace DirectiveValue)?;
+PolicyDelim = OptionalWhiteSpace ";" OptionalWhiteSpace;
 
-DirectiveName = (ALPHA / DIGIT / "-")+;
+Directive = name:DirectiveName value:(RequiredWhiteSpace v:DirectiveValue { return v; })? {
+    return { [name]: value };
+};
 
-// DirectiveValue = (RequiredAsciiWhiteSpace !([!-+] / [--;] / [<-~]))*
+DirectiveName = $(ALPHA / DIGIT / "-")+;
 
 DirectiveValue = SourceList;
 
-SourceList = SourceExpression (RequiredAsciiWhiteSpace SourceExpression)* / "'none'";
+SourceList = SourceExpression|.., RequiredWhiteSpace|;
 
 SourceExpression = SchemeSource / HostSource / KeywordSource / NonceSource / HashSource;
 
-SchemeSource = SchemePart ":";
+SchemeSource = $(SchemePart ":" !"//");
 
-HostSource = (SchemePart "://")? HostPart;
+HostSource = $((SchemePart "://")? HostPart (":" PortPart)? PathPart?);
 
 KeywordSource = "'self'" / "'unsafe-inline'" / "'unsafe-eval'"
                  / "'strict-dynamic'" / "'unsafe-hashes'"
                  / "'report-sample'" / "'unsafe-allow-redirects'"
-                 / "'wasm-unsafe-eval'";
+                 / "'wasm-unsafe-eval'" / "'none'";
 
-NonceSource = "nonce-" Base64Value;
+NonceSource = $("nonce-" Base64Value);
 
-HashSource = HashAlgorithm "-" Base64Value;
+HashSource = $(HashAlgorithm "-" Base64Value);
 
 HashAlgorithm = "sha256" / "sha384" / "sha512";
 
@@ -31,13 +35,45 @@ Base64Value = (ALPHA / DIGIT / "+" / "/" / "-" / "_" )+ ("=")|2..|
 
 HostPart = ("*.")? HostChar+ ("." HostChar+)* (".")? / "*";
 
+PortPart = (DIGIT / "*")+;
+
+PathPart = PathAbEmpty / PathAbsolute / PathNoScheme / PathRootless / PathEmpty;
+
+PathAbEmpty = ("/" PathSegment )*;
+
+PathAbsolute = "/" (PathSegmentNz ("/" PathSegment)*)?
+
+PathNoScheme = PathSegmentNzNc ("/" PathSegment)*;
+
+PathRootless = PathSegmentNz ("/" PathSegment)*;
+
+PathEmpty = "";
+
+PathSegment = PCHAR*;
+
+PathSegmentNz = PCHAR+;
+
+PathSegmentNzNc = (UnreservedChar / PCTEncoded / SubDelims / ":" / "@")+;
+
+PCHAR = UnreservedChar / PCTEncoded / SubDelims / ":" / "@";
+
+SubDelims = "!" / "$" / "&" / "'" / "(" / ")" / "*" / "+" / "," / ";" / "=";
+
 HostChar = ALPHA / DIGIT / "-";
 
 SchemePart = ALPHA (ALPHA / DIGIT / "+" / "-" / ".")*;
 
-AsciiWhiteSpace = ('\t' / '\n' / '\f' / '\r' / ' ')*;
+OptionalWhiteSpace = WhiteSpace*;
 
-RequiredAsciiWhiteSpace = ('\t' / '\n' / '\f' / '\r' / ' ')+;
+RequiredWhiteSpace = WhiteSpace+;
+
+WhiteSpace = ('\t' / '\n' / '\f' / '\r' / ' ');
+
+PCTEncoded = "%" HEXDIG HEXDIG;
+
+UnreservedChar = ALPHA / DIGIT / "-" / "." / "_" / "~"
+
+HEXDIG = [A-Fa-f0-9];
 
 ALPHA = [A-Za-z];
 
