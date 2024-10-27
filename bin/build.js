@@ -4,15 +4,14 @@ import { join } from "path";
 import { watch } from 'node:fs';
 import { argv } from "process";
 
-function build() {
-  const { NODE_ENV } = process.env;
-  const CUSTOM_BUILD_PATH = NODE_ENV || "";
-  const START_GRAMMAR_FILE = join(
-    "grammar",
-    "syntax.pegjs",
-  );
+const START_GRAMMAR_FILE = join(
+  "grammar",
+  "syntax.pegjs",
+);
 
-  const WRITE_PATH = join("generated", CUSTOM_BUILD_PATH);
+const WRITE_PATH = "generated";
+
+function build() {
   const sourceText = fs.readFileSync(START_GRAMMAR_FILE).toString();
 
   /** @type {import("peggy").SourceBuildOptions}  */
