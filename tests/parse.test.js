@@ -2,7 +2,7 @@ import { parse } from "../index.js";
 import { describe, it } from "node:test";
 import assert from "assert";
 
-describe("Base cases", () => {
+describe("parse", () => {
   it("should parse a simple CSP with default-src", () => {
     const csp = "default-src 'self'";
     const result = parse(csp);

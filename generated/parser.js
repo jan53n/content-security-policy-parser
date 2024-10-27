@@ -251,8 +251,7 @@ function peg$parse(input, options) {
   var peg$f0 = function(d) {
     return d.reduce((p, c) => ({ ...p, ...c }), {});
 };
-  var peg$f1 = function(name, v) { return v; };
-  var peg$f2 = function(name, value) {
+  var peg$f1 = function(name, value) {
     return { [name]: value };
 };
   var peg$currPos = options.peg$currPos | 0;
@@ -517,8 +516,7 @@ function peg$parse(input, options) {
       s3 = peg$parseRequiredWhiteSpace();
       if (s3 !== peg$FAILED) {
         s4 = peg$parseSourceList();
-        peg$savedPos = s2;
-        s2 = peg$f1(s1, s4);
+        s2 = s4;
       } else {
         peg$currPos = s2;
         s2 = peg$FAILED;
@@ -527,7 +525,7 @@ function peg$parse(input, options) {
         s2 = null;
       }
       peg$savedPos = s0;
-      s0 = peg$f2(s1, s2);
+      s0 = peg$f1(s1, s2);
     } else {
       peg$currPos = s0;
       s0 = peg$FAILED;
