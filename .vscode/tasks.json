@@ -1,20 +1,36 @@
 {
+	"version": "2.0.0",
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "test",
-			"group": "test",
-			"label": "npm: test",
+			"script": "test:watch",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"dependsOn": ["npm:build:watch"],
+			"dependsOrder": "parallel",
+			"label": "npm:test:watch",
 			"detail": "run all the tests and watch for changes"
 		},
 		{
 			"type": "npm",
-			"script": "build",
-			"group": "build",
+			"script": "build:watch",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"isBackground": true,
-			"problemMatcher": [],
-			"label": "npm: build",
-			"detail": "build"
-		},
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"label": "npm:build:watch",
+			"detail": "watch and build"
+		}
 	]
 }

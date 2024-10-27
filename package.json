@@ -4,9 +4,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "pretest": "npm run build",
-    "test": "node --test ./tests/**/**.test.js ./tests/**.test.js --watch generated/**.js",
-    "build": "node ./bin/build.js"
+    "test": "node --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
+    "test:watch": "npm run test -- --watch",
+    "build": "node ./bin/build.js",
+    "build:watch": "npm run build -- watch"
   },
   "keywords": [],
   "author": "",
