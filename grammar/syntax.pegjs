@@ -4,7 +4,7 @@ Policy = OptionalWhiteSpace d:Directive|.., PolicyDelim| PolicyDelim? {
 
 PolicyDelim = OptionalWhiteSpace ";" OptionalWhiteSpace;
 
-Directive = name:DirectiveName value:(RequiredWhiteSpace v:DirectiveValue { return v; })? {
+Directive = name:DirectiveName value:(RequiredWhiteSpace @DirectiveValue)? {
     return { [name]: value };
 };
 
