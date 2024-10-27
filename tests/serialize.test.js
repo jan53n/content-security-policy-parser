@@ -26,6 +26,7 @@ test('serialize function should handle CSP with null values correctly', () => {
 test('serialize function should handle an empty CSP object', () => {
     const input = {};
     const expected = "";
+    // @ts-ignore
     assert.strictEqual(serialize(input), expected);
 });
 
