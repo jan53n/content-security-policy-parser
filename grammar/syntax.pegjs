@@ -53,7 +53,7 @@ PathSegment = PCHAR*;
 
 PathSegmentNz = PCHAR+;
 
-PathSegmentNzNc = (UnreservedChar / PCTEncoded / SubDelims / ":" / "@")+;
+PathSegmentNzNc = (!":" PCHAR)+;
 
 PCHAR = UnreservedChar / PCTEncoded / SubDelims / ":" / "@";
 
