@@ -1,6 +1,13 @@
 {
-  "name": "duration",
+  "name": "csp3-parser",
   "version": "1.0.0",
+  "maintainers": [
+    {
+      "email": "jansen@outlook.in",
+      "name": "Jansen N. J.",
+      "url": "https://jnsn.in"
+    }
+  ],
   "main": "index.js",
   "type": "module",
   "scripts": {
