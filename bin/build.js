@@ -27,6 +27,8 @@ function build() {
   fs.writeFileSync(join(WRITE_PATH, "parser.js"), parserSource);
 }
 
+build();
+
 if (argv[2] === "watch") {
   watch('./grammar', { encoding: 'buffer' }, (eventType, filename) => {
     console.info((new Date()).getTime(), `rebuilding, ${filename} changed. (${eventType})`);
@@ -37,6 +39,4 @@ if (argv[2] === "watch") {
       console.error(error);
     }
   });
-} else {
-  build();
 }
