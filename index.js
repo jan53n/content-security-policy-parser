@@ -7,10 +7,11 @@ import { parse as _parse } from "./generated/parser.js";
 /**
  * parse CSP string into object
  * @param {string} payload
+ * @param {function} parser
  * @return {CSPParserResult}
  */
-export function parse(payload) {
-    return _parse(payload);
+export function parse(payload, parser = _parse) {
+    return parser(payload);
 }
 
 /**

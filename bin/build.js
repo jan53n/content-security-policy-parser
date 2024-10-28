@@ -4,12 +4,19 @@ import { join } from "path";
 import { watch } from 'node:fs';
 import { argv } from "process";
 
+const BUILD_PATH = process.env.DEBUG == "1" ? "debug" : "";
 const GRAMMAR_PATH = "grammar";
+
 const START_GRAMMAR_FILE = join(
   GRAMMAR_PATH,
   "syntax.pegjs",
 );
-const WRITE_PATH = "generated";
+
+const WRITE_PATH = join(
+  "generated",
+  BUILD_PATH
+);
+
 const WATCH_MODE_PREFIX = "watch";
 const WATCH_MODE = argv[2] || "";
 
