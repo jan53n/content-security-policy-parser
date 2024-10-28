@@ -23,7 +23,7 @@ HostSource = $((SchemePart "://")? HostPart (":" PortPart)? PathPart?);
 KeywordSource = "'self'" / "'unsafe-inline'" / "'unsafe-eval'"
                  / "'strict-dynamic'" / "'unsafe-hashes'"
                  / "'report-sample'" / "'unsafe-allow-redirects'"
-                 / "'wasm-unsafe-eval'" / "'none'";
+                 / "'wasm-unsafe-eval'" / "'script'" / "'none'";
 
 NonceSource = $("nonce-" Base64Value);
 
