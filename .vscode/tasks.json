@@ -8,8 +8,6 @@
 				"kind": "test",
 				"isDefault": true
 			},
-			"dependsOn": ["npm:build:watch"],
-			"dependsOrder": "parallel",
 			"label": "npm:test:watch",
 			"detail": "run all the tests and watch for changes"
 		},
@@ -22,10 +20,10 @@
 			},
 			"isBackground": true,
 			"presentation": {
-				"echo": true,
+				"echo": false,
 				"reveal": "silent",
 				"focus": false,
-				"panel": "shared",
+				"panel": "new",
 				"showReuseMessage": true,
 				"clear": false
 			},
