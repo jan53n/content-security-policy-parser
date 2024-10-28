@@ -1,12 +1,19 @@
 {
-  "name": "duration",
+  "name": "csp3-parser",
   "version": "1.0.0",
+  "maintainers": [
+    {
+      "email": "jansen@outlook.in",
+      "name": "Jansen N. J.",
+      "url": "https://jnsn.in"
+    }
+  ],
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "pretest": "npm run build",
-    "test": "node --test --watch generated/parser.js test/*",
-    "build": "node ./bin/build.js"
+    "test:watch": "node --watch --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
+    "build": "node ./bin/build.js",
+    "build:watch": "npm run build -- watch"
   },
   "keywords": [],
   "author": "",

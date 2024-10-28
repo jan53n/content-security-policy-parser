@@ -1,35 +1,80 @@
-Policies = l:(p:Policy PolicySep Space? { return p; } / p:Policy { return p; })+ {
-	return l.reduce((p, c) => ({ ...p, ...c }), {});
+Policy = OptionalWhiteSpace d:Directive|.., PolicyDelim| PolicyDelim? {
+    return d.reduce((p, c) => ({ ...p, ...c }), {});
+} / "";
+
+PolicyDelim = OptionalWhiteSpace ";" OptionalWhiteSpace;
+
+Directive = name:DirectiveName value:(RequiredWhiteSpace @DirectiveValue)? {
+    return { [name]: value };
 };
 
-Policy = PolicyWithRules / SingleSrcPolicy;
+DirectiveName = $(ALPHA / DIGIT / "-")+;
 
-SingleSrcPolicy = name:Src {
-	return { [name]: [] };
-};
+DirectiveValue = SourceList;
 
-PolicyWithRules = name:Src Space rules:Rules {
-	return { [name]: rules };
-};
+SourceList = SourceExpression|.., RequiredWhiteSpace|;
 
-Src = $(SrcWord '-' / SrcWord)+;
+SourceExpression = SchemeSource / HostSource / KeywordSource / NonceSource / HashSource;
 
-SrcWord = $([a-zA-Z])+;
+SchemeSource = $(SchemePart ":" !"//");
 
-Rules = rules:(r:Rule RuleSep { return r; } / r:Rule)+ {
-	return rules;
-};
+HostSource = $((SchemePart "://")? HostPart (":" PortPart)? PathPart?);
 
-Rule = rule:(QuotedRule / UnQuotedRule) {
-	return rule;
-};
+KeywordSource = "'self'" / "'unsafe-inline'" / "'unsafe-eval'"
+                 / "'strict-dynamic'" / "'unsafe-hashes'"
+                 / "'report-sample'" / "'unsafe-allow-redirects'"
+                 / "'wasm-unsafe-eval'" / "'script'" / "'none'";
 
-QuotedRule = RuleQuote rule:$(!RuleQuote .)* RuleQuote { return rule; };
+NonceSource = $("nonce-" Base64Value);
 
-UnQuotedRule = $(!RuleQuote !Space [a-zA-Z0-9 \.\:\/\-*])+
+HashSource = $(HashAlgorithm "-" Base64Value);
 
-Space = ' '+;
-RuleSep = Space;
-RuleQuote = "'";
-PolicySep = ';'
-Empty = ""
+HashAlgorithm = "sha256" / "sha384" / "sha512";
+
+Base64Value = (ALPHA / DIGIT / "+" / "/" / "-" / "_" )+ ("=")|2..|
+
+HostPart = ("*.")? HostChar+ ("." HostChar+)* (".")? / "*";
+
+PortPart = (DIGIT / "*")+;
+
+PathPart = PathAbEmpty / PathAbsolute / PathNoScheme / PathRootless / PathEmpty;
+
+PathAbEmpty = ("/" PathSegment )*;
+
+PathAbsolute = "/" (PathSegmentNz ("/" PathSegment)*)?
+
+PathNoScheme = PathSegmentNzNc ("/" PathSegment)*;
+
+PathRootless = PathSegmentNz ("/" PathSegment)*;
+
+PathEmpty = "";
+
+PathSegment = PCHAR*;
+
+PathSegmentNz = PCHAR+;
+
+PathSegmentNzNc = (!":" PCHAR)+;
+
+PCHAR = UnreservedChar / PCTEncoded / SubDelims / ":" / "@";
+
+SubDelims = "!" / "$" / "&" / "'" / "(" / ")" / "*" / "+" / "," / ";" / "=";
+
+HostChar = ALPHA / DIGIT / "-";
+
+SchemePart = ALPHA (ALPHA / DIGIT / "+" / "-" / ".")*;
+
+OptionalWhiteSpace = WhiteSpace*;
+
+RequiredWhiteSpace = WhiteSpace+;
+
+WhiteSpace = ('\t' / '\n' / '\f' / '\r' / ' ');
+
+PCTEncoded = "%" HEXDIG HEXDIG;
+
+UnreservedChar = ALPHA / DIGIT / "-" / "." / "_" / "~"
+
+HEXDIG = [A-Fa-f0-9];
+
+ALPHA = [A-Za-z];
+
+DIGIT = [0-9];
