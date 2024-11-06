@@ -1,4 +1,5 @@
 import { parse as _parse } from "./generated/parser.js";
+export * as sources from "./sources.js";
 
 /**
  * @typedef {Record<string, string[]|null>} CSPParserResult
