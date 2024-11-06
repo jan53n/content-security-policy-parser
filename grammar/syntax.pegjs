@@ -27,7 +27,7 @@ KeywordSource = "'self'" / "'unsafe-inline'" / "'unsafe-eval'"
 
 NonceSource = $("nonce-" Base64Value);
 
-HashSource = $(HashAlgorithm "-" Base64Value);
+HashSource = $("'" HashAlgorithm "-" Base64Value "'");
 
 HashAlgorithm = "sha256" / "sha384" / "sha512";
 
