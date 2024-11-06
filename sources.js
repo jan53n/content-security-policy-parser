@@ -1,6 +1,8 @@
 
 /**
  * common keyword sources
+ * @enum {string}
+ * @readonly
  */
 export const Keyword = Object.freeze({
     SELF: "'self'",
@@ -17,6 +19,8 @@ export const Keyword = Object.freeze({
 
 /**
  * algorithm names that can be used in combination with hash sources
+ * @enum {string}
+ * @readonly
  */
 export const HashSourceAlgorithm = Object.freeze({
     SHA_256: "sha256",
