@@ -44,5 +44,5 @@ export function nonce(base64value) {
  * @return {string}
  */
 export function hash(algorithm, value) {
-    return algorithm + "-" + value;
+    return "'" + algorithm + "-" + value + "'";
 }
