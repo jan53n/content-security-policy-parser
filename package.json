@@ -9,7 +9,7 @@
     }
   ],
   "main": "index.js",
-  "types": "types.d.ts",
+  "typings": "",
   "type": "module",
   "scripts": {
     "test:watch": "node --watch --test \"tests/**/**.test.js\" \"tests/**.test.js\"",

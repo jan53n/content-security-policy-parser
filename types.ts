@@ -17,3 +17,10 @@ export interface BaseSource<T extends string> {
     type: T,
     value: string
 }
+
+export function parse(
+    payload: string,
+    parser?: (payload: string) => CSPParserResult
+): CSPParserResult {
+    return {} as CSPParserResult;
+}
