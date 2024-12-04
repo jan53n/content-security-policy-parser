@@ -14,3 +14,4 @@ export interface BaseSource<T extends string> {
     value: string;
 }
 export declare function parse(payload: string, parser?: (payload: string) => CSPParserResult): CSPParserResult;
+export declare function serialize(csp: CSPParserResult): string;
