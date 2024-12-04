@@ -24,3 +24,9 @@ export function parse(
 ): CSPParserResult {
     return {} as CSPParserResult;
 }
+
+export function serialize(
+    csp: CSPParserResult,
+): string {
+    return "";
+}

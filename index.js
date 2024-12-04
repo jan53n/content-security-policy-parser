@@ -1,4 +1,5 @@
 import { parse as _parse } from "./generated/parser.js";
+export { serialize } from "./serializer.js";
 
 /**
  * parse CSP string into object

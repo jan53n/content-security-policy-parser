@@ -1,26 +1,33 @@
 import { $parse } from "./parser.js";
 import { describe, it } from "node:test";
 import assert from "assert";
+import { serialize } from "../serializer.js";
 
 describe("parse", () => {
   it("should parse a simple CSP with default-src", () => {
     const csp = "default-src 'self'";
     const result = $parse(csp);
 
-    assert.deepEqual(result, {
+    const expected = {
       "default-src": [{ type: "keyword", value: "self" }]
-    });
+    };
+
+    assert.deepEqual(result, expected);
+    assert.deepEqual(serialize(result), csp);
   });
 
   it("should parse CSP with multiple directives", () => {
     const csp = "default-src 'self'; img-src https:; script-src 'none'";
     const result = $parse(csp);
 
-    assert.deepEqual(result, {
+    const expected = {
       "default-src": [{ type: "keyword", value: "self" }],
       "img-src": [{ type: "scheme", value: "https" }],
       "script-src": [{ type: "keyword", value: "none" }]
-    });
+    };
+
+    assert.deepEqual(result, expected);
+    assert.deepEqual(serialize(result), csp);
   });
 
   it("should parse CSP with multiple sources for a directive", () => {
@@ -37,15 +44,18 @@ describe("parse", () => {
     const result = $parse(csp);
 
     assert.deepEqual(result, {});
+    assert.deepEqual(serialize(result), csp);
   });
 
   it("should handle CSP with unusual formatting and spaces", () => {
     const csp = "  default-src   'self'   ;   img-src   *;  ";
     const result = $parse(csp);
 
-    assert.deepEqual(result, {
+    const expected = {
       "default-src": [{ type: "keyword", value: "self" }],
       "img-src": [{ type: "host", value: "*" }]
-    });
+    };
+
+    assert.deepEqual(result, expected);
   });
 });
