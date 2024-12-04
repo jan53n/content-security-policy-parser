@@ -16,18 +16,28 @@ SourceList = SourceExpression|.., RequiredWhiteSpace|;
 
 SourceExpression = SchemeSource / HostSource / KeywordSource / NonceSource / HashSource;
 
-SchemeSource = $(SchemePart ":" !"//");
+SchemeSource = value:(@$SchemePart ":" !"//") {
+    return { type: "scheme", value };
+};
 
-HostSource = $((SchemePart "://")? HostPart (":" PortPart)? PathPart?);
+HostSource = value:$((SchemePart "://")? HostPart (":" PortPart)? PathPart?) {
+    return { type: "host", value };
+};
 
-KeywordSource = "'self'" / "'unsafe-inline'" / "'unsafe-eval'"
+KeywordSource = value:("'self'" / "'unsafe-inline'" / "'unsafe-eval'"
                  / "'strict-dynamic'" / "'unsafe-hashes'"
                  / "'report-sample'" / "'unsafe-allow-redirects'"
-                 / "'wasm-unsafe-eval'" / "'script'" / "'none'";
+                 / "'wasm-unsafe-eval'" / "'script'" / "'none'") {
+                    return { type: "keyword", value: value.replaceAll(/^'|'$/g, "") }
+                 };
 
-NonceSource = $("nonce-" Base64Value);
+NonceSource = value:("nonce-" @Base64Value) {
+    return { type: "nonce", value };
+};
 
-HashSource = $("'" HashAlgorithm "-" Base64Value "'");
+HashSource = v:("'" algorithm:HashAlgorithm "-" value:Base64Value "'" { return { algorithm, value } }) {
+    return { type: "hash", ...v };
+};
 
 HashAlgorithm = "sha256" / "sha384" / "sha512";
 
@@ -57,7 +67,7 @@ PathSegmentNzNc = (!":" PCHAR)+;
 
 PCHAR = UnreservedChar / PCTEncoded / SubDelims / ":" / "@";
 
-SubDelims = "!" / "$" / "&" / "'" / "(" / ")" / "*" / "+" / "," / ";" / "=";
+SubDelims = "!" / "$" / "&" / "'" / "(" / ")" / "*" / "+" / "=";
 
 HostChar = ALPHA / DIGIT / "-";
 
