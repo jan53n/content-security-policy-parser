@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "maintainers": [
     {
-      "email": "jansen@outlook.in",
       "name": "Jansen N. J.",
+      "email": "me@jnsn.in",
       "url": "https://jnsn.in"
     }
   ],
@@ -20,11 +20,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "peggy": "^4.1.1"
-  },
+  "description": "A CSP3 Parser based on W3 specification ([https://www.w3.org/TR/CSP3/#directive-value](https://www.w3.org/TR/CSP3/#directive-value))",
   "devDependencies": {
+    "peggy": "^4.1.1",
     "@types/node": "^22.8.1",
     "typescript": "^5.7.2"
   }
