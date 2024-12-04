@@ -2,14 +2,10 @@ import { parse as _parse } from "./generated/parser.js";
 export * as sources from "./sources.js";
 
 /**
- * @typedef {Record<string, string[]|null>} CSPParserResult
- */
-
-/**
  * parse CSP string into object
  * @param {string} payload
  * @param {function} parser
- * @return {CSPParserResult}
+ * @return {import("./types.js").CSPParserResult}
  */
 export function parse(payload, parser = _parse) {
     return parser(payload);
@@ -17,7 +13,7 @@ export function parse(payload, parser = _parse) {
 
 /**
  * serialize parse result into a valid CSP string
- * @param {CSPParserResult} payload
+ * @param {import("./types.js").CSPParserResult} payload
  * @return {string}
  */
 export function serialize(payload) {

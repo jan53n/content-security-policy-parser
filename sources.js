@@ -22,11 +22,11 @@ export const Keyword = Object.freeze({
  * @enum {string}
  * @readonly
  */
-export const HashSourceAlgorithm = Object.freeze({
+export const HashSourceAlgorithm = {
     SHA_256: "sha256",
     SHA_384: "sha384",
     SHA_512: "sha512"
-});
+};
 
 /**
  * make csp nonce-{hash} source
