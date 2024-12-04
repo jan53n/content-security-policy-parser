@@ -58,4 +58,52 @@ describe("parse", () => {
 
     assert.deepEqual(result, expected);
   });
+
+  it("should parse hashes with valid hash sources", () => {
+    const csp = "script-src 'unsafe-inline' 'sha256-bsL+mi3oZzLLaqQfYT1VG97MlXdJVMfWdxL4zJZWWso=' 'sha256-DMxzebz+UDMxY8vhyVtJqs3f8nV/unUlxokxCC596BM=';";
+    const result = $parse(csp);
+
+    const expected = {
+      "script-src": [
+        {
+          type: "keyword",
+          value: "unsafe-inline"
+        },
+        {
+          type: "hash",
+          algorithm: "sha256",
+          value: "bsL+mi3oZzLLaqQfYT1VG97MlXdJVMfWdxL4zJZWWso="
+        },
+        {
+          type: "hash",
+          algorithm: "sha256",
+          value: "DMxzebz+UDMxY8vhyVtJqs3f8nV/unUlxokxCC596BM="
+        }
+      ]
+    }
+
+    assert.deepEqual(result, expected);
+    assert.deepEqual(serialize(result) + ";", csp);
+  });
+
+  it("should parse valid nonce sources", () => {
+    const csp = "script-src nonce-bsL+mi3oZzLLaqQfYT1VG97MlXdJVMfWdxL4zJZWWso= nonce-DMxzebz+UDMxY8vhyVtJqs3f8nV/unUlxokxCC596BM=;";
+    const result = $parse(csp);
+
+    const expected = {
+      "script-src": [
+        {
+          type: "nonce",
+          value: "bsL+mi3oZzLLaqQfYT1VG97MlXdJVMfWdxL4zJZWWso="
+        },
+        {
+          type: "nonce",
+          value: "DMxzebz+UDMxY8vhyVtJqs3f8nV/unUlxokxCC596BM="
+        }
+      ]
+    }
+
+    assert.deepEqual(result, expected);
+    assert.deepEqual(serialize(result) + ";", csp);
+  });
 });

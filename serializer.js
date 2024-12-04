@@ -21,9 +21,9 @@ function encodeRules(rules) {
                 case "keyword":
                     return `'${rule.value}'`;
                 case "nonce":
-                    return `'nonce-${rule.value}'`;
+                    return `nonce-${rule.value}`;
                 case "hash":
-                    return `${rule.algorithm}-${rule.value}`;
+                    return `'${rule.algorithm}-${rule.value}'`;
                 case "host":
                     return rule.value;
                 case "scheme":

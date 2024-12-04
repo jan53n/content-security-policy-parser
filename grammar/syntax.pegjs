@@ -14,7 +14,7 @@ DirectiveValue = SourceList;
 
 SourceList = SourceExpression|.., RequiredWhiteSpace|;
 
-SourceExpression = SchemeSource / HostSource / KeywordSource / NonceSource / HashSource;
+SourceExpression = NonceSource / SchemeSource / HostSource / KeywordSource / HashSource;
 
 SchemeSource = value:(@$SchemePart ":" !"//") {
     return { type: "scheme", value };
@@ -31,17 +31,17 @@ KeywordSource = value:("'self'" / "'unsafe-inline'" / "'unsafe-eval'"
                     return { type: "keyword", value: value.replaceAll(/^'|'$/g, "") }
                  };
 
-NonceSource = value:("nonce-" @Base64Value) {
+NonceSource = value:("nonce-" @$Base64Value) {
     return { type: "nonce", value };
 };
 
-HashSource = v:("'" algorithm:HashAlgorithm "-" value:Base64Value "'" { return { algorithm, value } }) {
+HashSource = v:("'" algorithm:HashAlgorithm "-" value:$Base64Value "'" { return { algorithm, value } }) {
     return { type: "hash", ...v };
 };
 
 HashAlgorithm = "sha256" / "sha384" / "sha512";
 
-Base64Value = (ALPHA / DIGIT / "+" / "/" / "-" / "_" )+ ("=")|2..|
+Base64Value = (ALPHA / DIGIT / "+" / "/" / "-" / "_" )+ ("=")|1..|
 
 HostPart = ("*.")? HostChar+ ("." HostChar+)* (".")? / "*";
 
