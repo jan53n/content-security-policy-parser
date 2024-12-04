@@ -7,7 +7,7 @@ describe("parse", () => {
     const csp = "default-src 'self'";
     const result = $parse(csp);
     assert.deepEqual(result, {
-      "default-src": ["'self'"]
+      "default-src": [{ type: "keyword", value: "self" }]
     });
   });
 
@@ -15,9 +15,9 @@ describe("parse", () => {
     const csp = "default-src 'self'; img-src https:; script-src 'none'";
     const result = $parse(csp);
     assert.deepEqual(result, {
-      "default-src": ["'self'"],
-      "img-src": ["https:"],
-      "script-src": ["'none'"]
+      "default-src": [{ type: "keyword", value: "self" }],
+      "img-src": [{ type: "scheme", value: "https" }],
+      "script-src": [{ type: "keyword", value: "none" }]
     });
   });
 
@@ -25,7 +25,7 @@ describe("parse", () => {
     const csp = "default-src 'self' https://example.com";
     const result = $parse(csp);
     assert.deepEqual(result, {
-      "default-src": ["'self'", "https://example.com"]
+      "default-src": [{ type: "keyword", value: "self" }, { type: "host", value: "https://example.com" }]
     });
   });
 
@@ -39,8 +39,8 @@ describe("parse", () => {
     const csp = "  default-src   'self'   ;   img-src   *;  ";
     const result = $parse(csp);
     assert.deepEqual(result, {
-      "default-src": ["'self'"],
-      "img-src": ["*"]
+      "default-src": [{ type: "keyword", value: "self" }],
+      "img-src": [{ type: "host", value: "*" }]
     });
   });
 });
