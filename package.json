@@ -1,6 +1,6 @@
 {
   "name": "csp3-parser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "maintainers": [
     {
       "name": "Jansen N. J.",
@@ -17,7 +17,23 @@
     "build:watch": "npm run build -- watch",
     "build:types": "tsc"
   },
-  "keywords": [],
+  "keywords": [
+    "CSP",
+    "Content Security Policy",
+    "CSP3",
+    "CSP parser",
+    "security",
+    "web security",
+    "directive parser",
+    "policy parser",
+    "CSP analysis",
+    "CSP tools",
+    "content-security-policy",
+    "directive handling",
+    "security headers",
+    "web development",
+    "CSP compliance"
+  ],
   "author": "",
   "license": "ISC",
   "description": "A CSP3 Parser based on W3 specification ([https://www.w3.org/TR/CSP3/#directive-value](https://www.w3.org/TR/CSP3/#directive-value))",

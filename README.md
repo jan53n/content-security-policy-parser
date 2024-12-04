@@ -4,14 +4,6 @@ A robust CSP3 (Content Security Policy 3) parser that complies with the [W3C CSP
 
 ---
 
-## Installation
-
-```bash
-npm install csp3-parser
-```
-
----
-
 ## Usage
 
 ### Basic Example
