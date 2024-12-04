@@ -17,7 +17,7 @@ npm install csp3-parser
 ### Basic Example
 
 ```javascript
-const { parse } = require('csp3-parser');
+import { parse } from "csp3-parser";
 
 const csp = "default-src 'self' https://example.com";
 const result = parse(csp);
@@ -35,6 +35,8 @@ console.log(result);
 ### Complex CSP Parsing
 
 ```javascript
+import { parse } from "csp3-parser";
+
 const csp =
     "default-src 'self' https://example.com; script-src 'unsafe-inline' 'self' https://cdn.example.com; img-src https://images.example.com data: 'self'; object-src 'none'";
 const result = parse(csp);
