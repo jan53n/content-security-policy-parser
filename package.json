@@ -1,6 +1,7 @@
 {
   "name": "csp3-parser",
-  "version": "1.0.4",
+  "version": "1.0.5",
+  "repository": "https://github.com/jan53n/content-security-policy-parser",
   "maintainers": [
     {
       "name": "Jansen N. J.",
