@@ -3,7 +3,7 @@
   "version": "1.0.9",
   "repository": "https://github.com/jan53n/content-security-policy-parser",
   "main": "index.js",
-  "typings": "",
+  "types": "types.d.ts",
   "type": "module",
   "scripts": {
     "test:watch": "node --watch --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
