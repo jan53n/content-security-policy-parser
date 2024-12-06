@@ -1,23 +1,13 @@
 {
   "name": "csp3-parser",
   "version": "1.0.9",
+  "license": "ISC",
   "repository": "https://github.com/jan53n/content-security-policy-parser",
-  "maintainers": [
-    {
-      "name": "Jansen N. J.",
-      "email": "me@jnsn.in",
-      "url": "https://jnsn.in"
-    }
-  ],
-  "main": "index.js",
-  "typings": "",
-  "type": "module",
-  "scripts": {
-    "test:watch": "node --watch --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
-    "test": "node --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
-    "build": "node ./bin/build.js",
-    "build:watch": "npm run build -- watch",
-    "build:types": "tsc"
+  "description": "A CSP3 Parser based on W3 specification",
+  "author": {
+    "name": "Jansen N. J.",
+    "email": "me@jnsn.in",
+    "url": "https://jnsn.in"
   },
   "keywords": [
     "CSP",
@@ -36,9 +26,16 @@
     "web development",
     "CSP compliance"
   ],
-  "author": "",
-  "license": "ISC",
-  "description": "A CSP3 Parser based on W3 specification ([https://www.w3.org/TR/CSP3/#directive-value](https://www.w3.org/TR/CSP3/#directive-value))",
+  "main": "index.js",
+  "types": "types.d.ts",
+  "type": "module",
+  "scripts": {
+    "test:watch": "node --watch --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
+    "test": "node --test \"tests/**/**.test.js\" \"tests/**.test.js\"",
+    "build": "node ./bin/build.js",
+    "build:watch": "npm run build -- watch",
+    "build:types": "tsc"
+  },
   "devDependencies": {
     "peggy": "^4.1.1",
     "@types/node": "^22.8.1",
