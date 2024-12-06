@@ -1,6 +1,6 @@
 {
   "name": "csp3-parser",
-  "version": "1.1.1",
+  "version": "1.0.11",
   "license": "ISC",
   "repository": "https://github.com/jan53n/content-security-policy-parser",
   "description": "A CSP3 Parser based on W3 specification",
