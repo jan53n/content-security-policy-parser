@@ -2,13 +2,6 @@
   "name": "csp3-parser",
   "version": "1.0.9",
   "repository": "https://github.com/jan53n/content-security-policy-parser",
-  "maintainers": [
-    {
-      "name": "Jansen N. J.",
-      "email": "me@jnsn.in",
-      "url": "https://jnsn.in"
-    }
-  ],
   "main": "index.js",
   "typings": "",
   "type": "module",
@@ -36,7 +29,11 @@
     "web development",
     "CSP compliance"
   ],
-  "author": "",
+  "author": {
+    "name": "Jansen N. J.",
+    "email": "me@jnsn.in",
+    "url": "https://jnsn.in"
+  },
   "license": "ISC",
   "description": "A CSP3 Parser based on W3 specification ([https://www.w3.org/TR/CSP3/#directive-value](https://www.w3.org/TR/CSP3/#directive-value))",
   "devDependencies": {
